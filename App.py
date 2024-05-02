@@ -77,6 +77,23 @@ def get_idea_id(idea_id):
     except:
         "some internal errror happend", 500
 
+@App.put("/ideaapp/api/v1/ideas/<idea_id>")
+def Update_idea(idea_id):
+    idea_id=int(idea_id)
+    if idea_id not in ideas:
+        return "The idea_ID that was passed is not present.",400
+    requst_body=request.get_json()
+    ideas[idea_id].update(requst_body)
+    return "idea updated successfully",200
+
+@App.delete("/ideaapp/api/v1/ideas/<idea_id>")
+def Delete_idea(idea_id):
+    idea_id=int(idea_id)
+    if idea_id not in ideas:
+        return "The idea_ID that was passed is not present.",400
+    del ideas[idea_id]
+    return "idea deleted successfully",200
+
 
 if __name__ == "__main__":
     App.run(port=8080)
